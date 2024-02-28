@@ -1,8 +1,23 @@
 import React, { Fragment, useEffect, useState } from "react";
 
+import EditUsername from "./EditUsername";
+
 const ListUsernames = () => {
 
     const [users, setUsers] = useState([]);
+
+    //delete user function
+    const deleteUser = async (id) => {
+        try {
+            const deleteUser = await fetch(`http://localhost:4000/users/${id}`, {
+                method: "DELETE"
+            });
+            
+            setUsers(users.filter(user => user.user_id !== id))
+        } catch (err) {
+            console.error(err.message);
+        }
+    }
 
     const getUsers = async () => {
         try {
@@ -41,10 +56,18 @@ const ListUsernames = () => {
                     <td>john@example.com</td>
                 </tr> */}
                 {users.map( users => (
-                    <tr>
+
+                    <tr key={users.user_id}>
                         <td>{users.description}</td>
-                        <td>Edit</td>
-                        <td>Delete</td>
+                        <td>
+                            <EditUsername users={users} />
+                            {/* //maybe user={user} */}
+                        </td>
+                        <td>
+                            <button className="btn btn-danger" onClick={() => deleteUser(users.user_id)}>
+                                Delete
+                            </button>
+                        </td>
                     </tr>
                 ))}
 
