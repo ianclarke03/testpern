@@ -11,5 +11,16 @@ root.render(
   </React.StrictMode>
 );
 
+/*
+to check for sql changes made in terminal:
+sudo su postgres
+psql
+\c misk_info
+SELECT * FROM users;
 
 
+other useful commands:
+\l ->list all databases
+\q to exit
+
+*/
